@@ -1,0 +1,35 @@
+'This method renames all the filenames in a folder
+Sub RenameAllFilenamesInAFolder()
+    Dim intRowCount As Integer
+    Dim intCtr As Integer
+    Dim strFileNameExisting As String
+    Dim strFileNameNew As String
+    Dim strFolder As String
+     
+    'Set the folder path
+    strFolder = Range("D2").Value
+     
+     
+    With Sheets("SheetRename")
+        'Find the total rows count in the sheet
+        'This will be the last non-blank cell in column A...
+        intRowCount = .Cells(.Rows.Count, "A").End(xlUp).Row
+         
+        'Loop through from the 2nd row (1st row is Heading)
+        'till the total rows in the sheet
+        For intCtr = 2 To intRowCount
+            'Get the existing filename from the cell
+            strFileNameExisting = .Range("A" & intCtr)
+    
+            'Get the new filename from the cell
+            strFileNameNew = .Range("B" & intCtr)
+             
+            'Rename the file
+            Name strFolder & strFileNameExisting As strFolder & strFileNameNew
+        Next intCtr
+    End With
+     
+    'Display an appropriate message, once complete
+    MsgBox "All files renamed successfully!", _
+                        vbInformation, "All files renamed"
+End Sub
